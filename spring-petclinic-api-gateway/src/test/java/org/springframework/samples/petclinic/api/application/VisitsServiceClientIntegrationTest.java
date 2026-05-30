@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.api.application;
 
-import mockwebserver3.MockResponse;
-import mockwebserver3.MockWebServer;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,17 +46,16 @@ class VisitsServiceClientIntegrationTest {
 
 
     private void assertVisitDescriptionEquals(Visits visits, int petId, String description) {
-        assertEquals(1, visits.items().size());
-        assertNotNull(visits.items().get(0));
-        assertEquals(petId, visits.items().get(0).petId());
-        assertEquals(description, visits.items().get(0).description());
+        assertEquals(1, visits.getItems().size());
+        assertNotNull(visits.getItems().get(0));
+        assertEquals(petId, visits.getItems().get(0).getPetId());
+        assertEquals(description, visits.getItems().get(0).getDescription());
     }
 
     private void prepareResponse() {
-        MockResponse response = new MockResponse.Builder()
+        MockResponse response = new MockResponse()
             .addHeader("Content-Type", "application/json")
-            .body("{\"items\":[{\"id\":5,\"date\":\"2018-11-15\",\"description\":\"test visit\",\"petId\":1}]}")
-            .build();
+            .setBody("{\"items\":[{\"id\":5,\"date\":\"2018-11-15\",\"description\":\"test visit\",\"petId\":1}]}");
         this.server.enqueue(response);
     }
 

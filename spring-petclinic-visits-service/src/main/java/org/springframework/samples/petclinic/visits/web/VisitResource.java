@@ -16,8 +16,8 @@
 package org.springframework.samples.petclinic.visits.web;
 
 import java.util.List;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
@@ -75,8 +75,15 @@ class VisitResource {
         return new Visits(byPetIdIn);
     }
 
-    record Visits(
-        List<Visit> items
-    ) {
+    static class Visits {
+        private final List<Visit> items;
+
+        Visits(List<Visit> items) {
+            this.items = items;
+        }
+
+        public List<Visit> getItems() {
+            return items;
+        }
     }
 }

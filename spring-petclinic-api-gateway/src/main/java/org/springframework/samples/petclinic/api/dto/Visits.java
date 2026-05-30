@@ -22,10 +22,23 @@ import java.util.List;
 /**
  * @author Maciej Szarlinski
  */
-public record Visits (
-    List<VisitDetails> items
-) {
+public class Visits {
+
+    private List<VisitDetails> items;
+
     public Visits() {
-        this(new ArrayList<>());
+        this.items = new ArrayList<>();
+    }
+
+    public Visits(List<VisitDetails> items) {
+        this.items = items;
+    }
+
+    public List<VisitDetails> getItems() {
+        return items;
+    }
+
+    public void setItems(List<VisitDetails> items) {
+        this.items = items;
     }
 }

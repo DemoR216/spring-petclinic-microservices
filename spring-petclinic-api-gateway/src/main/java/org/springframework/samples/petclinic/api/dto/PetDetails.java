@@ -15,24 +15,69 @@
  */
 package org.springframework.samples.petclinic.api.dto;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Maciej Szarlinski
  */
-public record PetDetails(
-    int id,
-    String name,
-    String birthDate,
-    PetType type,
-    List<VisitDetails> visits) {
+public class PetDetails {
 
-    public PetDetails {
-        if (visits == null) {
-            visits = new ArrayList<>();
-        }
+    private int id;
+    private String name;
+    private String birthDate;
+    private PetType type;
+    private List<VisitDetails> visits = new ArrayList<>();
+
+    public PetDetails() {
+    }
+
+    public PetDetails(int id, String name, String birthDate, PetType type, List<VisitDetails> visits) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.type = type;
+        this.visits = visits;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public PetType getType() {
+        return type;
+    }
+
+    public List<VisitDetails> getVisits() {
+        return visits;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setType(PetType type) {
+        this.type = type;
+    }
+
+    public void setVisits(List<VisitDetails> visits) {
+        this.visits = visits;
     }
 
     public static final class PetDetailsBuilder {
@@ -40,7 +85,7 @@ public record PetDetails(
         private String name;
         private String birthDate;
         private PetType type;
-        private List<VisitDetails> visits;
+        private List<VisitDetails> visits = new ArrayList<>();
 
         private PetDetailsBuilder() {
         }

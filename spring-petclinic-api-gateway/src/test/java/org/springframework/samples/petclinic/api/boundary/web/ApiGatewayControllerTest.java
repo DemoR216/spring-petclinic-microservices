@@ -3,7 +3,8 @@ package org.springframework.samples.petclinic.api.boundary.web;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JAutoConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -12,7 +13,6 @@ import org.springframework.samples.petclinic.api.dto.OwnerDetails;
 import org.springframework.samples.petclinic.api.dto.PetDetails;
 import org.springframework.samples.petclinic.api.dto.VisitDetails;
 import org.springframework.samples.petclinic.api.dto.Visits;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
@@ -25,10 +25,10 @@ import java.util.List;
 @Import({ReactiveResilience4JAutoConfiguration.class, CircuitBreakerConfiguration.class})
 class ApiGatewayControllerTest {
 
-    @MockitoBean
+    @MockBean
     private CustomersServiceClient customersServiceClient;
 
-    @MockitoBean
+    @MockBean
     private VisitsServiceClient visitsServiceClient;
 
     @Autowired
@@ -49,10 +49,10 @@ class ApiGatewayControllerTest {
             .when(customersServiceClient.getOwner(1))
             .thenReturn(Mono.just(owner));
 
-        VisitDetails visit = new VisitDetails(300, cat.id(), null, "First visit");
+        VisitDetails visit = new VisitDetails(300, cat.getId(), null, "First visit");
         Visits visits = new Visits(List.of(visit));
         Mockito
-            .when(visitsServiceClient.getVisitsForPets(Collections.singletonList(cat.id())))
+            .when(visitsServiceClient.getVisitsForPets(Collections.singletonList(cat.getId())))
             .thenReturn(Mono.just(visits));
 
         client.get()
@@ -82,7 +82,7 @@ class ApiGatewayControllerTest {
             .thenReturn(Mono.just(owner));
 
         Mockito
-            .when(visitsServiceClient.getVisitsForPets(Collections.singletonList(cat.id())))
+            .when(visitsServiceClient.getVisitsForPets(Collections.singletonList(cat.getId())))
             .thenReturn(Mono.error(new ConnectException("Simulate error")));
 
         client.get()
