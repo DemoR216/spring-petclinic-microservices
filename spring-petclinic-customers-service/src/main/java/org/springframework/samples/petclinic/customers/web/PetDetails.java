@@ -24,21 +24,46 @@ import java.util.Date;
 /**
  * @author mszarlinski@bravurasolutions.com on 2016-12-05.
  */
+class PetDetails {
 
-record PetDetails(
-
-    long id,
-
-    String name,
-
-    String owner,
+    private final long id;
+    private final String name;
+    private final String owner;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date birthDate,
+    private final Date birthDate;
 
-    PetType type
-) {
+    private final PetType type;
+
+    public PetDetails(long id, String name, String owner, Date birthDate, PetType type) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.birthDate = birthDate;
+        this.type = type;
+    }
+
     public PetDetails(Pet pet) {
         this(pet.getId(), pet.getName(), pet.getOwner().getFirstName() + " " + pet.getOwner().getLastName(), pet.getBirthDate(), pet.getType());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public PetType getType() {
+        return type;
     }
 }

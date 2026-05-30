@@ -15,29 +15,97 @@
  */
 package org.springframework.samples.petclinic.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Maciej Szarlinski
  */
-public record OwnerDetails(
-    int id,
-    String firstName,
-    String lastName,
-    String address,
-    String city,
-    String telephone,
-    List<PetDetails> pets) {
+public class OwnerDetails {
 
-    @JsonIgnore
-    public List<Integer> getPetIds() {
-        return pets.stream()
-            .map(PetDetails::id)
-            .toList();
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String telephone;
+    private List<PetDetails> pets = new ArrayList<>();
+
+    public OwnerDetails() {
     }
 
+    public OwnerDetails(int id, String firstName, String lastName, String address, String city, String telephone, List<PetDetails> pets) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.telephone = telephone;
+        this.pets = pets;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public List<PetDetails> getPets() {
+        return pets;
+    }
+
+    public List<Integer> getPetIds() {
+        return pets.stream()
+            .map(PetDetails::getId)
+            .collect(Collectors.toList());
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setPets(List<PetDetails> pets) {
+        this.pets = pets;
+    }
 
     public static final class OwnerDetailsBuilder {
         private int id;
@@ -46,7 +114,7 @@ public record OwnerDetails(
         private String address;
         private String city;
         private String telephone;
-        private List<PetDetails> pets;
+        private List<PetDetails> pets = new ArrayList<>();
 
         private OwnerDetailsBuilder() {
         }

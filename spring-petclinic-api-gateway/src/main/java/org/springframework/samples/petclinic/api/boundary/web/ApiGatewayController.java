@@ -29,6 +29,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Maciej Szarlinski
@@ -67,11 +68,11 @@ public class ApiGatewayController {
 
     private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
-            owner.pets()
-                .forEach(pet -> pet.visits()
-                    .addAll(visits.items().stream()
-                        .filter(v -> v.petId() == pet.id())
-                        .toList())
+            owner.getPets()
+                .forEach(pet -> pet.getVisits()
+                    .addAll(visits.getItems().stream()
+                        .filter(v -> v.getPetId() == pet.getId())
+                        .collect(Collectors.toList()))
                 );
             return owner;
         };
