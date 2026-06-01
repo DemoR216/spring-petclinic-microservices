@@ -9611,3 +9611,56 @@ strong {
     margin-bottom: 30px; } }
 
 /*# sourceMappingURL=../../../../../target/petclinic.css.map */
+
+/* ==========================================================================
+   Cardinal Health Brand Color Overrides
+   ========================================================================== */
+:root,
+[data-bs-theme="light"] {
+  --bs-primary: #E41F35;
+  --bs-primary-rgb: 228, 31, 53;
+  --bs-link-color: #E41F35;
+  --bs-link-color-rgb: 228, 31, 53;
+  --bs-link-hover-color: #b6192a;
+  --bs-link-hover-color-rgb: 182, 25, 42;
+  --bs-primary-text-emphasis: #5b0c15;
+  --bs-primary-bg-subtle: #fad2d6;
+  --bs-primary-border-subtle: #f4a4ad;
+  --bs-focus-ring-color: rgba(228, 31, 53, 0.25);
+}
+
+a {
+  color: var(--bs-link-color);
+}
+
+a:hover {
+  color: var(--bs-link-hover-color);
+}
+
+.btn-primary {
+  --bs-btn-bg: #E41F35;
+  --bs-btn-border-color: #E41F35;
+  --bs-btn-hover-bg: #b6192a;
+  --bs-btn-hover-border-color: #a31625;
+  --bs-btn-active-bg: #a31625;
+  --bs-btn-active-border-color: #8f1320;
+  --bs-btn-disabled-bg: #E41F35;
+  --bs-btn-disabled-border-color: #E41F35;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #E41F35;
+  --bs-btn-border-color: #E41F35;
+  --bs-btn-hover-bg: #E41F35;
+  --bs-btn-hover-border-color: #E41F35;
+  --bs-btn-active-bg: #E41F35;
+  --bs-btn-active-border-color: #E41F35;
+}
+
+.text-primary {
+  color: #E41F35 !important;
+}
+
+.bg-primary {
+  background-color: #E41F35 !important;
+}
