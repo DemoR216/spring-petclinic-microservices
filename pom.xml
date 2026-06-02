@@ -33,6 +33,7 @@
         <jolokia-core.version>1.7.2</jolokia-core.version>
 
         <docker.image.prefix>springcommunity</docker.image.prefix>
+        <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
         <docker.image.exposed.port>9090</docker.image.exposed.port>
         <docker.image.dockerfile.dir>${basedir}</docker.image.dockerfile.dir>
         <!-- podman is also supported -->
@@ -63,6 +64,11 @@
                 <groupId>org.jolokia</groupId>
                 <artifactId>jolokia-core</artifactId>
                 <version>${jolokia-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
             </dependency>
 
         </dependencies>
