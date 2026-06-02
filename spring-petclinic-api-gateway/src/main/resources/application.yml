@@ -3,6 +3,12 @@ spring:
     name: api-gateway
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      connect-timeout: 2s
+      timeout: 2s
   cloud:
     gateway:
       default-filters:
@@ -15,6 +21,13 @@ spring:
             retries: 1
             statuses: SERVICE_UNAVAILABLE
             methods: POST
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+            redis-rate-limiter.requestedTokens: 1
+            key-resolver: "#{@remoteAddrKeyResolver}"
+            deny-empty-key: false
       routes:
         - id: vets-service
           uri: lb://vets-service
