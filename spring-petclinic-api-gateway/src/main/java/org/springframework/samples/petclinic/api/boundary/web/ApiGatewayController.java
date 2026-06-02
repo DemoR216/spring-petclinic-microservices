@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -36,6 +38,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/gateway")
+@Tag(name = "api-gateway", description = "API Gateway aggregation endpoints")
 public class ApiGatewayController {
 
     private final CustomersServiceClient customersServiceClient;
@@ -52,6 +55,7 @@ public class ApiGatewayController {
         this.cbFactory = cbFactory;
     }
 
+    @Operation(summary = "Get owner details with pets and visits")
     @GetMapping(value = "owners/{ownerId}")
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
         return customersServiceClient.getOwner(ownerId)

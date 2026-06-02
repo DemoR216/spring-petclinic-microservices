@@ -20,6 +20,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
 import io.micrometer.core.annotation.Timed;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Timed("petclinic.visit")
+@Tag(name = "visit-controller", description = "Operations for managing pet visits")
 class VisitResource {
 
     private static final Logger log = LoggerFactory.getLogger(VisitResource.class);
@@ -53,6 +56,7 @@ class VisitResource {
         this.visitRepository = visitRepository;
     }
 
+    @Operation(summary = "Create a new visit for a pet")
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
     public Visit create(
@@ -64,11 +68,13 @@ class VisitResource {
         return visitRepository.save(visit);
     }
 
+    @Operation(summary = "List visits for a pet")
     @GetMapping("owners/*/pets/{petId}/visits")
     public List<Visit> read(@PathVariable("petId") @Min(1) int petId) {
         return visitRepository.findByPetId(petId);
     }
 
+    @Operation(summary = "List visits for multiple pets")
     @GetMapping("pets/visits")
     public Visits read(@RequestParam("petId") List<Integer> petIds) {
         final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);
