@@ -16,6 +16,8 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.slf4j.Logger;
@@ -39,6 +41,7 @@ import java.util.Optional;
 @RequestMapping("/owners")
 @RestController
 @Timed("petclinic.owner")
+@Tag(name = "owner-controller", description = "Operations for managing pet owners")
 class OwnerResource {
 
     private static final Logger log = LoggerFactory.getLogger(OwnerResource.class);
@@ -51,9 +54,7 @@ class OwnerResource {
         this.ownerEntityMapper = ownerEntityMapper;
     }
 
-    /**
-     * Create Owner
-     */
+    @Operation(summary = "Create a new owner")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody OwnerRequest ownerRequest) {
@@ -61,25 +62,19 @@ class OwnerResource {
         return ownerRepository.save(owner);
     }
 
-    /**
-     * Read single Owner
-     */
+    @Operation(summary = "Find an owner by ID")
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") @Min(1) int ownerId) {
         return ownerRepository.findById(ownerId);
     }
 
-    /**
-     * Read List of Owners
-     */
+    @Operation(summary = "List all owners")
     @GetMapping
     public List<Owner> findAll() {
         return ownerRepository.findAll();
     }
 
-    /**
-     * Update Owner
-     */
+    @Operation(summary = "Update an existing owner")
     @PutMapping(value = "/{ownerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOwner(@PathVariable("ownerId") @Min(1) int ownerId, @Valid @RequestBody OwnerRequest ownerRequest) {
