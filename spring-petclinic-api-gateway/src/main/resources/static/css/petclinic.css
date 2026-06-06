@@ -9523,8 +9523,8 @@ strong {
   font-family: "montserratregular", sans-serif; }
 
 .navbar {
-  border-top: 4px solid #6db33f;
-  background-color: #34302d;
+  border-top: 4px solid #E41F35;
+  background-color: #1A1A1A !important;
   margin-bottom: 0px;
   border-bottom: 0;
   border-left: 0;
@@ -9572,8 +9572,26 @@ strong {
   margin-bottom: 0; }
 
 .navbar li:hover > a {
-  color: #eeeeee;
-  background-color: #6db33f; }
+  color: #FFFFFF;
+  background-color: #E41F35; }
+
+.navbar li > a {
+  color: #FFFFFF !important; }
+
+.btn-primary, .btn-default {
+  background-color: #E41F35 !important;
+  border-color: #E41F35 !important;
+  color: #FFFFFF !important; }
+
+.btn-primary:hover, .btn-default:hover {
+  background-color: #C41930 !important;
+  border-color: #C41930 !important; }
+
+a {
+  color: #E41F35; }
+
+a:hover {
+  color: #C41930; }
 
 .navbar-toggle {
   border-width: 0; }
