@@ -23,6 +23,34 @@
     margin-bottom: 30px; }
   .index-page--subtitle {
     margin-top: 10px;
-    margin-bottom: 30px; } }
+    margin-bottom: 30px; }
+
+  /* Dark mode toggle in collapsed navbar */
+  .dark-mode-toggle {
+    margin: 10px 0; }
+
+  /* Table responsive improvements */
+  .table-responsive {
+    border: 0; }
+  .table-responsive .table {
+    min-width: 500px; }
+
+  /* Pet form stacking on mobile */
+  .pet-form .col-sm-2,
+  .pet-form .col-form-label {
+    text-align: left;
+    padding-bottom: 4px; }
+  .pet-form .offset-sm-2 {
+    margin-left: 0; }
+
+  /* Owner form full-width on mobile */
+  form[style*="max-width"] {
+    max-width: 100% !important; }
+
+  /* Improve table cell padding on mobile */
+  .table td, .table th {
+    padding: 0.5rem;
+    font-size: 0.9rem; }
+}
 
 /*# sourceMappingURL=../../../../../target/responsive.css.map */
