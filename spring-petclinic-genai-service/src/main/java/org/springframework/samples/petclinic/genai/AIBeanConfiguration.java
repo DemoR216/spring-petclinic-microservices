@@ -1,29 +1,21 @@
 package org.springframework.samples.petclinic.genai;
 
-import org.springframework.ai.embedding.EmbeddingModel;
-import org.springframework.ai.vectorstore.SimpleVectorStore;
-import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 /**
- * A Configuration class for beans used by the Chat Client.
+ * Configuration class for beans used by the GenAI service.
  *
  * @author Oded Shopen
  */
 @Configuration
 public class AIBeanConfiguration {
 
-	@Bean
-	VectorStore vectorStore(EmbeddingModel embeddingModel) {
-		return SimpleVectorStore.builder(embeddingModel).build();
-	}
-
     @Bean
     @LoadBalanced
-    public WebClient.Builder loadBalancedWebClientBuilder() {
-        return WebClient.builder();
+    public RestTemplate loadBalancedRestTemplate() {
+        return new RestTemplate();
     }
 }

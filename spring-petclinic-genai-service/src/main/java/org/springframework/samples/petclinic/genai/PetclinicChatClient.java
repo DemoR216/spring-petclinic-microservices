@@ -1,72 +1,44 @@
 package org.springframework.samples.petclinic.genai;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * This REST controller is being invoked by the in order to interact with the LLM
+ * Placeholder REST controller for the GenAI chat endpoint.
+ * Returns canned responses until Spring AI integration is available (requires Spring Boot 3+).
  *
  * @author Oded Shopen
  */
 @RestController
-@RequestMapping("/")
 public class PetclinicChatClient {
 
     private static final Logger LOG = LoggerFactory.getLogger(PetclinicChatClient.class);
 
-	// ChatModel is the primary interfaces for interacting with an LLM
-	// it is a request/response interface that implements the ModelModel
-	// interface. Make suer to visit the source code of the ChatModel and
-	// checkout the interfaces in the core Spring AI package.
-	private final ChatClient chatClient;
+    @PostMapping("/chatclient")
+    public String chatclient(@RequestBody String query) {
+        LOG.info("Received chat query: {}", query);
+        return "This is a placeholder response from the GenAI service. "
+            + "Spring AI integration requires Spring Boot 3+. "
+            + "Your query was: " + query;
+    }
 
-	public PetclinicChatClient(ChatClient.Builder builder, ChatMemory chatMemory,
-                               PetclinicTools petclinicTools) {
-        // @formatter:off
-		this.chatClient = builder
-				.defaultSystem("""
-                          You are a friendly AI assistant designed to help with the management of a veterinarian pet clinic called Spring Petclinic.
-                          Your job is to answer questions about and to perform actions on the user's behalf, mainly around
-                          veterinarians, owners, owners' pets and owners' visits.
-                          You are required to answer an a professional manner. If you don't know the answer, politely tell the user
-                          you don't know the answer, then ask the user a followup question to try and clarify the question they are asking.
-                          If you do know the answer, provide the answer but do not provide any additional followup questions.
-                          When dealing with vets, if the user is unsure about the returned results, explain that there may be additional data that was not returned.
-                          Only if the user is asking about the total number of all vets, answer that there are a lot and ask for some additional criteria.
-                          For owners, pets or visits - provide the correct data.
-                          """)
-				.defaultAdvisors(
-						// Chat memory helps us keep context when using the chatbot for up to 10 previous messages.
-                        MessageChatMemoryAdvisor.builder(chatMemory)
-                            .order(10)
-                            .build(),
-						new SimpleLoggerAdvisor()
-						)
-                .defaultTools(petclinicTools)
-				.build();
-  }
+    @PostMapping("/api/genai/chat")
+    public ResponseEntity<Map<String, Object>> chat(@RequestBody Map<String, String> request) {
+        String query = request.getOrDefault("message", "");
+        LOG.info("Received chat API query: {}", query);
 
-  @PostMapping("/chatclient")
-  public String exchange(@RequestBody String query) {
-	  try {
-		  //All chatbot messages go through this endpoint
-		  //and are passed to the LLM
-		  return this.chatClient
-              .prompt()
-              .user(query)
-              .call()
-              .content();
-	  } catch (Exception exception) {
-          LOG.error("Error processing chat message", exception);
- 	      return "Chat is currently unavailable. Please try again later.";
-	  }
-  }
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "This is a placeholder response from the GenAI service. "
+            + "Spring AI integration requires Spring Boot 3+.");
+        response.put("query", query);
+        response.put("status", "ok");
+        return ResponseEntity.ok(response);
+    }
 }

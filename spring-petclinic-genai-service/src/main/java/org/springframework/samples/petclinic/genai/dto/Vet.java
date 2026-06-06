@@ -22,9 +22,29 @@ import java.util.Set;
  *
  * @author Oded Shopen
  */
-public record Vet(
-    Integer id,
-    String firstName,
-    String lastName,
-    Set<Specialty> specialties) {
+public class Vet {
+
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private Set<Specialty> specialties;
+
+    public Vet() {
+    }
+
+    public Vet(Integer id, String firstName, String lastName, Set<Specialty> specialties) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.specialties = specialties;
+    }
+
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public Set<Specialty> getSpecialties() { return specialties; }
+    public void setSpecialties(Set<Specialty> specialties) { this.specialties = specialties; }
 }
