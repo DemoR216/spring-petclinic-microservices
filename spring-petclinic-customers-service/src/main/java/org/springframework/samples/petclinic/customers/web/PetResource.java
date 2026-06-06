@@ -16,6 +16,10 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +38,7 @@ import java.util.List;
  */
 @RestController
 @Timed("petclinic.pet")
+@Tag(name = "pet-controller", description = "Pet management APIs")
 class PetResource {
 
     private static final Logger log = LoggerFactory.getLogger(PetResource.class);
@@ -46,11 +51,18 @@ class PetResource {
         this.ownerRepository = ownerRepository;
     }
 
+    @Operation(summary = "List all pet types")
+    @ApiResponse(responseCode = "200", description = "Pet types retrieved successfully")
     @GetMapping("/petTypes")
     public List<PetType> getPetTypes() {
         return petRepository.findPetTypes();
     }
 
+    @Operation(summary = "Create a new pet for an owner")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Pet created successfully"),
+        @ApiResponse(responseCode = "404", description = "Owner not found")
+    })
     @PostMapping("/owners/{ownerId}/pets")
     @ResponseStatus(HttpStatus.CREATED)
     public Pet processCreationForm(
@@ -65,6 +77,11 @@ class PetResource {
         return save(pet, petRequest);
     }
 
+    @Operation(summary = "Update an existing pet")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Pet updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Pet not found")
+    })
     @PutMapping("/owners/*/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processUpdateForm(@RequestBody PetRequest petRequest) {
@@ -85,6 +102,11 @@ class PetResource {
         return petRepository.save(pet);
     }
 
+    @Operation(summary = "Find pet by ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pet found"),
+        @ApiResponse(responseCode = "404", description = "Pet not found")
+    })
     @GetMapping("owners/*/pets/{petId}")
     public PetDetails findPet(@PathVariable("petId") int petId) {
         Pet pet = findPetById(petId);

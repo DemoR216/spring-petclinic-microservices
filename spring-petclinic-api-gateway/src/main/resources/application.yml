@@ -35,6 +35,24 @@ spring:
             - Path=/api/customer/**
           filters:
             - StripPrefix=2
+        - id: customers-service-swagger
+          uri: lb://customers-service
+          predicates:
+            - Path=/api/customer/swagger-ui/**,/api/customer/swagger-ui.html,/api/customer/v3/api-docs/**
+          filters:
+            - StripPrefix=2
+        - id: vets-service-swagger
+          uri: lb://vets-service
+          predicates:
+            - Path=/api/vet/swagger-ui/**,/api/vet/swagger-ui.html,/api/vet/v3/api-docs/**
+          filters:
+            - StripPrefix=2
+        - id: visits-service-swagger
+          uri: lb://visits-service
+          predicates:
+            - Path=/api/visit/swagger-ui/**,/api/visit/swagger-ui.html,/api/visit/v3/api-docs/**
+          filters:
+            - StripPrefix=2
 
 rate-limiting:
   enabled: true

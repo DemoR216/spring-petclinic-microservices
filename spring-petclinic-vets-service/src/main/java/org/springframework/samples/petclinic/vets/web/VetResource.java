@@ -17,6 +17,9 @@ package org.springframework.samples.petclinic.vets.web;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
@@ -33,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/vets")
 @RestController
+@Tag(name = "vet-controller", description = "Veterinarian management APIs")
 class VetResource {
 
     private final VetRepository vetRepository;
@@ -41,6 +45,8 @@ class VetResource {
         this.vetRepository = vetRepository;
     }
 
+    @Operation(summary = "List all veterinarians")
+    @ApiResponse(responseCode = "200", description = "Vets retrieved successfully")
     @GetMapping
     @Cacheable("vets")
     public List<Vet> showResourcesVetList() {
