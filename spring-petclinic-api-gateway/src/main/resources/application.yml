@@ -6,6 +6,7 @@ spring:
   cloud:
     gateway:
       default-filters:
+        - name: RateLimiting
         - name: CircuitBreaker
           args:
             name: defaultCircuitBreaker
@@ -34,6 +35,10 @@ spring:
             - Path=/api/customer/**
           filters:
             - StripPrefix=2
+
+rate-limiting:
+  enabled: true
+  requests-per-minute: 100
 ---
 spring:
   config:
