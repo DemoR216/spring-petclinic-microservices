@@ -25,10 +25,6 @@
     margin-top: 10px;
     margin-bottom: 30px; }
 
-  /* Dark mode toggle in collapsed navbar */
-  .dark-mode-toggle {
-    margin: 10px 0; }
-
   /* Table responsive improvements */
   .table-responsive {
     border: 0; }
